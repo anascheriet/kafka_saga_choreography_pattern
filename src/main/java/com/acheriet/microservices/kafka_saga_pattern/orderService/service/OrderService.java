@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -32,6 +33,10 @@ public class OrderService {
         return purchaseOrder;
     }
 
+    public List<PurchaseOrder> getAll() {
+        return repository.findAll();
+    }
+
     private PurchaseOrder dtoToEntity(OrderRequestDto dto) {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         purchaseOrder.setProductId(dto.getProductId());
@@ -40,4 +45,5 @@ public class OrderService {
         purchaseOrder.setPrice(PRODUCT_PRICE.get(purchaseOrder.getProductId()));
         return purchaseOrder;
     }
+
 }
