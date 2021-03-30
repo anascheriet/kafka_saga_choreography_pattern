@@ -20,32 +20,18 @@ public class OrderEventPublisherService {
     private KafkaTemplate<String, String> kafkaTemplate;
     String topic = "saga-topic";
 
-    //String bootstrapServers = "127.0.0.1:9092";
-    //Properties properties = new Properties();
-    // create producer
-    //KafkaProducer<String, String> producer;
-
-    /*public void initProps() {
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-
-        // initialize producer
-        //producer = new KafkaProducer<String, String>(properties);
-    }*/
-
     public void raiseOrderCreatedEvent(final PurchaseOrder purchaseOrder) {
         OrderEvent orderEvent = new OrderEvent();
         orderEvent.setOrderId(purchaseOrder.getId());
         orderEvent.setUserId(purchaseOrder.getUserId());
         orderEvent.setPrice(purchaseOrder.getPrice());
 
-        publishMessage(orderEvent.toString());
+        publishOrderEvent(orderEvent.toString());
 
     }
 
-    public void publishMessage(String message) {
-        this.kafkaTemplate.send(topic, message);
+    public void publishOrderEvent(String order) {
+        this.kafkaTemplate.send(topic, order);
     }
 
 }
