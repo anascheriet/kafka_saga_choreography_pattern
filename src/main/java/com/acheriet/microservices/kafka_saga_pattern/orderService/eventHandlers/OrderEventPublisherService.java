@@ -27,11 +27,10 @@ public class OrderEventPublisherService {
         orderEvent.setPrice(purchaseOrder.getPrice());
 
         publishOrderEvent(orderEvent.toString());
-
     }
 
     public void publishOrderEvent(String order) {
-        this.kafkaTemplate.send(topic, order);
+        this.kafkaTemplate.send(topic,1, "orderEvent", order);
     }
 
 }
